@@ -5,35 +5,18 @@ import { z } from "zod";
 // Zod schema for validating the handle string itself
 const handleSchema = z.string().min(1);
 
-// Define type alias for route context
-type RouteParams = {
-  params: {
-    handle: string;
-  };
-};
-
-// Trivial comment to force change detection
+// Remove the unused type alias
 
 export async function GET(
   request: NextRequest,
-  routeContext: RouteParams // Use the defined type alias
+  { params }: { params: { handle: string } } // Correct signature with destructuring
 ) {
-  const { params } = routeContext; // Destructure params from routeContext
   // Log the full request URL and the received params object
   console.log("[API /api/users/[handle]] Request URL:", request.url);
   console.log("[API /api/users/[handle]] Received params object:", params);
 
-  // Extract handle from URL (Current workaround - keep for now)
-  const url = new URL(request.url);
-  const pathSegments = url.pathname.split("/");
-  const handleFromUrl = pathSegments.pop() || "";
-  console.log(
-    "[API /api/users/[handle]] Extracted handle from URL:",
-    handleFromUrl
-  );
-
-  // Validate the handle extracted from the URL
-  const validation = handleSchema.safeParse(handleFromUrl);
+  // Validate the handle directly from params
+  const validation = handleSchema.safeParse(params.handle);
   if (!validation.success) {
     console.error(
       "[API /api/users/[handle]] Handle validation failed:",
