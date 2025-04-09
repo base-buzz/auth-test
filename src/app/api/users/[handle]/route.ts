@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
 
@@ -6,35 +6,23 @@ import { z } from "zod";
 const handleSchema = z.string().min(1);
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { handle: string } } // Revert to direct destructuring
+  req: NextRequest,
+  { params }: { params: { handle: string } }
 ) {
-  // Log the full request URL and the received params object
-  console.log("[API /api/users/[handle]] Request URL:", request.url);
-  console.log("[API /api/users/[handle]] Received params object:", params);
-
   // Validate the handle directly from params
-  const validation = handleSchema.safeParse(params?.handle); // Use params.handle
+  const validation = handleSchema.safeParse(params?.handle);
   if (!validation.success) {
-    console.error(
-      "[API /api/users/[handle]] Handle validation failed:",
-      validation.error.errors
-    );
     return NextResponse.json(
-      { error: "Invalid handle format in URL" },
+      { error: "Invalid handle format" },
       { status: 400 }
     );
   }
   const handle = validation.data;
-  console.log("[API /api/users/[handle]] Validated handle:", handle);
 
   // Restore Supabase client check and query logic
   if (!supabaseAdmin) {
-    console.error(
-      "Public user profile fetch failed - Supabase client unavailable"
-    );
     return NextResponse.json(
-      { error: "Server configuration error" },
+      { error: "Supabase not configured" },
       { status: 500 }
     );
   }
@@ -49,22 +37,13 @@ export async function GET(
       .maybeSingle();
 
     if (error) {
-      console.error("Supabase error fetching user by handle:", {
-        handle,
-        error,
-      });
-      return NextResponse.json({ error: "Database error" }, { status: 500 });
+      return NextResponse.json({ error: "DB error" }, { status: 500 });
     }
 
     if (!data) {
-      console.log(
-        "[API /api/users/[handle]] User not found for handle:",
-        handle
-      );
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log("[API /api/users/[handle]] Found user:", data.handle);
     return NextResponse.json({
       address: data.address,
       name: data.display_name,
@@ -75,9 +54,7 @@ export async function GET(
       tier: data.tier,
     });
   } catch (err: unknown) {
-    console.error("Error fetching user profile by handle:", { handle, err });
-    const message =
-      err instanceof Error ? err.message : "Failed to fetch user profile";
+    const message = err instanceof Error ? err.message : "Unexpected error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
