@@ -4,11 +4,19 @@ import { z } from "zod";
 
 // Zod schema for validating the handle string itself
 const handleSchema = z.string().min(1);
+
+// Define type alias for route context
+type RouteParams = {
+  params: {
+    handle: string;
+  };
+};
+
 // Trivial comment to force change detection
 
 export async function GET(
   request: NextRequest,
-  routeContext: { params: { handle: string } } // Use routeContext to avoid conflict
+  routeContext: RouteParams // Use the defined type alias
 ) {
   const { params } = routeContext; // Destructure params from routeContext
   // Log the full request URL and the received params object
