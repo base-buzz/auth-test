@@ -42636,3 +42636,15 @@ WalletConnect Core is already initialized. This is probably a mistake and can le
  GET /api/users/7cbe1e 200 in 216ms
  ✓ Compiled in 902ms (7663 modules)
  GET /7cbe1e 200 in 62ms
+ ✓ Compiled in 4.8s (7126 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 984ms (4172 modules)
+ GET /api/auth/session 200 in 1512ms
+2025-04-09T14:42:24.011Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:42:24.006Z"}
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 6 times.
+ GET /7cbe1e 200 in 829ms
+ ✓ Compiled in 1895ms (3397 modules)
+ ✓ Compiled /favicon.ico in 424ms (4185 modules)
+ GET /favicon.ico 200 in 890ms
+ GET /favicon.ico 200 in 206ms

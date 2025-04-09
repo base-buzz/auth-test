@@ -20,7 +20,8 @@ const envSchema = z.object({
 
 const env = envSchema.parse(process.env);
 
-export const authOptions: NextAuthOptions = {
+// Define authOptions but DO NOT export it directly from the route file
+const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
