@@ -132,7 +132,7 @@ export const authOptions: NextAuthOptions = {
         isNewUser,
       });
     },
-    async signOut({ session: _session, token }) {
+    async signOut({ token }) {
       logToServer("INFO", "NextAuth SignOut Event", { userId: token?.sub });
     },
     async session({ session, token }) {

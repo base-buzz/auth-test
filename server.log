@@ -42285,3 +42285,354 @@ WalletConnect Core is already initialized. This is probably a mistake and can le
  ✓ Compiled in 202ms (3201 modules)
 [Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
  GET /dashboard 200 in 22ms
+   Reload env: .env.local
+ ✓ Compiled in 1234ms (6896 modules)
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /dashboard 200 in 206ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 845ms (3952 modules)
+[next-auth][error][JWT_SESSION_ERROR] 
+https://next-auth.js.org/errors#jwt_session_error decryption operation failed {
+  message: 'decryption operation failed',
+  stack: 'JWEDecryptionFailed: decryption operation failed\n' +
+    '    at gcmDecrypt (webpack-internal:///(rsc)/./node_modules/jose/dist/node/cjs/runtime/decrypt.js:67:15)\n' +
+    '    at decrypt (webpack-internal:///(rsc)/./node_modules/jose/dist/node/cjs/runtime/decrypt.js:92:20)\n' +
+    '    at flattenedDecrypt (webpack-internal:///(rsc)/./node_modules/jose/dist/node/cjs/jwe/flattened/decrypt.js:143:52)\n' +
+    '    at async compactDecrypt (webpack-internal:///(rsc)/./node_modules/jose/dist/node/cjs/jwe/compact/decrypt.js:18:23)\n' +
+    '    at async jwtDecrypt (webpack-internal:///(rsc)/./node_modules/jose/dist/node/cjs/jwt/decrypt.js:8:23)\n' +
+    '    at async Object.decode (webpack-internal:///(rsc)/./node_modules/next-auth/jwt/index.js:56:7)\n' +
+    '    at async Object.session (webpack-internal:///(rsc)/./node_modules/next-auth/core/routes/session.js:39:28)\n' +
+    '    at async AuthHandler (webpack-internal:///(rsc)/./node_modules/next-auth/core/index.js:136:27)\n' +
+    '    at async NextAuthRouteHandler (webpack-internal:///(rsc)/./node_modules/next-auth/next/index.js:57:28)\n' +
+    '    at async NextAuth._args$ (webpack-internal:///(rsc)/./node_modules/next-auth/next/index.js:89:16)\n' +
+    '    at async AppRouteRouteModule.do (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:33891)\n' +
+    '    at async AppRouteRouteModule.handle (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41254)\n' +
+    '    at async doRender (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:1513:42)\n' +
+    '    at async DevServer.renderToResponseWithComponentsImpl (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:1915:28)\n' +
+    '    at async DevServer.renderPageComponent (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:2393:24)\n' +
+    '    at async DevServer.renderToResponseImpl (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:2430:32)\n' +
+    '    at async DevServer.pipeImpl (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:1003:25)\n' +
+    '    at async NextNodeServer.handleCatchallRenderRequest (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/next-server.js:304:17)\n' +
+    '    at async DevServer.handleRequestImpl (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/base-server.js:895:17)\n' +
+    '    at async /Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+    '    at async Span.traceAsyncFn (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/trace/trace.js:157:20)\n' +
+    '    at async DevServer.handleRequest (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+    '    at async invokeRender (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/lib/router-server.js:235:21)\n' +
+    '    at async handleRequest (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/lib/router-server.js:426:24)\n' +
+    '    at async requestHandlerImpl (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/lib/router-server.js:450:13)\n' +
+    '    at async Server.requestListener (/Users/based/Documents/GitHub/auth-test/node_modules/next/dist/server/lib/start-server.js:158:13)',
+  name: 'JWEDecryptionFailed'
+}
+ GET /api/auth/session 200 in 1801ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1474ms (7546 modules)
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 6 times.
+ GET / 200 in 2244ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled /favicon.ico in 348ms (4180 modules)
+ GET /favicon.ico 200 in 770ms
+ GET /api/auth/session 200 in 202ms
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 7 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 8 times.
+(node:17460) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 expirer_expired listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+ HEAD / 200 in 385ms
+ GET /api/auth/csrf 200 in 27ms
+ GET /api/auth/providers 200 in 42ms
+ GET /api/auth/csrf 200 in 6ms
+2025-04-09T14:13:44.911Z [INFO] SIWE Authorize Start - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-09T14:13:44.914Z [INFO] SIWE Authorize - SIWE Message Created - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","nonce":"8be6f07d6454ab828a3c99e364e724643904a4eb213997db0b75cb55a47849e5"}
+ GET /api/auth/csrf 200 in 4ms
+2025-04-09T14:13:44.931Z [INFO] SIWE Authorize - CSRF Token Obtained - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","csrfToken":"8be6f07d6454ab828a3c99e364e724643904a4eb213997db0b75cb55a47849e5"}
+2025-04-09T14:13:44.931Z [INFO] SIWE Authorize - Verifying Signature - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","nonce":"8be6f07d6454ab828a3c99e364e724643904a4eb213997db0b75cb55a47849e5","signature":"0x0d751387e3d47052cbf9c3e34940a988d5e1d3f9fd710e99ac1c865fb800292c26f33abad7ed6106fd8f5f4babe7efb6f64ceb142489b2600ccd2436b1a92dc11b"}
+2025-04-09T14:13:44.971Z [INFO] SIWE Authentication Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+ POST /api/auth/callback/credentials 200 in 72ms
+2025-04-09T14:13:44.975Z [INFO] NextAuth SignIn Event - Data: {"user":{"id":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"},"account":{"providerAccountId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","type":"credentials","provider":"credentials"}}
+ GET /api/auth/session 200 in 31ms
+2025-04-09T14:13:45.010Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:13:45.006Z"}
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Invalid/Expired/Missing, UserID: undefined
+[Middleware Redirect] Path: /profile, Reason: No Token, Redirecting to: /
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Invalid/Expired/Missing, UserID: undefined
+[Middleware Redirect] Path: /dashboard, Reason: No Token, Redirecting to: /
+ GET / 200 in 85ms
+ GET / 200 in 336ms
+ ○ Compiling /api/profile ...
+ ✓ Compiled /api/profile in 1575ms (7655 modules)
+2025-04-09T14:13:46.765Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:13:46.764Z"}
+ ✓ Compiled in 260ms (3393 modules)
+ GET /api/profile 200 in 2686ms
+2025-04-09T14:13:47.846Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+ ✓ Compiled in 282ms (3393 modules)
+ GET / 200 in 54ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Invalid/Expired/Missing, UserID: undefined
+[Middleware Redirect] Path: /profile, Reason: No Token, Redirecting to: /
+ GET / 200 in 12ms
+ ✓ Compiled in 880ms (7303 modules)
+ GET / 200 in 167ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 742ms (4167 modules)
+ GET /api/auth/session 200 in 1098ms
+2025-04-09T14:15:03.661Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:15:03.660Z"}
+ ✓ Compiled in 381ms (3393 modules)
+ GET / 200 in 64ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Invalid/Expired/Missing, UserID: undefined
+[Middleware Redirect] Path: /settings, Reason: No Token, Redirecting to: /
+ GET / 200 in 13ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Invalid/Expired/Missing, UserID: undefined
+[Middleware Redirect] Path: /profile, Reason: No Token, Redirecting to: /
+ GET / 200 in 38ms
+
+> temp-next-app@0.1.0 dev
+> next dev -p 3334
+
+[33mwarn[0m  - SUPABASE_IMAGE_HOSTNAME environment variable is not set. Image optimization for Supabase assets will be disabled.
+[33mwarn[0m  - SUPABASE_IMAGE_HOSTNAME environment variable is not set. Image optimization for Supabase assets will be disabled.
+   ▲ Next.js 15.2.5
+   - Local:        http://localhost:3334
+   - Network:      http://192.168.0.101:3334
+   - Environments: .env.local
+
+ ✓ Starting...
+[33mwarn[0m  - SUPABASE_IMAGE_HOSTNAME environment variable is not set. Image optimization for Supabase assets will be disabled.
+[33mwarn[0m  - SUPABASE_IMAGE_HOSTNAME environment variable is not set. Image optimization for Supabase assets will be disabled.
+ ✓ Ready in 1622ms
+ ✓ Compiled /middleware in 330ms (200 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 5.3s (7109 modules)
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 2 times.
+ GET / 200 in 6306ms
+ ✓ Compiled in 1231ms (3390 modules)
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /api/auth/[...nextauth] in 1399ms (3734 modules)
+ ✓ Compiled in 1716ms (7552 modules)
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 3 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 4 times.
+ HEAD / 200 in 2828ms
+ GET /api/auth/session 200 in 3423ms
+2025-04-09T14:16:25.316Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:16:25.315Z"}
+ GET /favicon.ico 200 in 4642ms
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /favicon.ico 200 in 491ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1683ms (7641 modules)
+2025-04-09T14:16:27.349Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:16:27.308Z"}
+ GET /dashboard 200 in 1892ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ○ Compiling /settings ...
+ GET /api/profile 200 in 3002ms
+2025-04-09T14:16:28.359Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+ ✓ Compiled /settings in 1020ms (7648 modules)
+ GET /settings 200 in 1141ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 40ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ✓ Compiled in 339ms (3395 modules)
+ GET /settings 200 in 155ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 17ms
+2025-04-09T14:16:29.045Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:16:29.045Z"}
+ ✓ Compiled in 177ms (3395 modules)
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 18ms
+ GET /api/profile 200 in 869ms
+2025-04-09T14:16:29.721Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-09T14:16:29.741Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:16:29.739Z"}
+ GET /api/profile 200 in 243ms
+2025-04-09T14:16:29.969Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+ ✓ Compiled in 234ms (3395 modules)
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 75ms
+ ✓ Compiled in 204ms (3395 modules)
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 76ms
+ ✓ Compiled in 204ms (3395 modules)
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 10ms
+ ○ Compiling /[handle] ...
+ ✓ Compiled /[handle] in 594ms (7655 modules)
+ GET /7cbe1e 200 in 1164ms
+ ○ Compiling /api/users/[handle] ...
+ ✓ Compiled /api/users/[handle] in 514ms (7657 modules)
+[API /api/users/[handle]] Request URL: http://localhost:3334/api/users/7cbe1e
+[API /api/users/[handle]] Received params object: Promise {
+  <pending>,
+  handle: '7cbe1e',
+  [Symbol(async_id_symbol)]: 373382,
+  [Symbol(trigger_async_id_symbol)]: 373210,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api/users/[handle]/route',
+    fallbackRouteParams: null,
+    route: '/api/users/[handle]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      requestProtocol: 'http',
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isPrerendering: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    requestEndedState: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: bound onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    dynamicIOEnabled: false,
+    dev: false
+  },
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: [
+      '_N_T_/layout',
+      '_N_T_/api/layout',
+      '_N_T_/api/users/layout',
+      '_N_T_/api/users/[handle]/layout',
+      '_N_T_/api/users/[handle]/route',
+      '_N_T_/api/users/7cbe1e'
+    ],
+    url: { pathname: '/api/users/7cbe1e', search: '' },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    usedDynamic: true
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false }
+}
+[API /api/users/[handle]] Extracted handle from URL: 7cbe1e
+[API /api/users/[handle]] Validated handle: 7cbe1e
+[API /api/users/[handle]] Found user: 7cbe1e
+ GET /api/users/7cbe1e 200 in 1191ms
+[API /api/users/[handle]] Request URL: http://localhost:3334/api/users/7cbe1e
+[API /api/users/[handle]] Received params object: Promise {
+  <pending>,
+  handle: '7cbe1e',
+  [Symbol(async_id_symbol)]: 374687,
+  [Symbol(trigger_async_id_symbol)]: 374677,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api/users/[handle]/route',
+    fallbackRouteParams: null,
+    route: '/api/users/[handle]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      requestProtocol: 'http',
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isPrerendering: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    requestEndedState: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: bound onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    dynamicIOEnabled: false,
+    dev: false
+  },
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: [
+      '_N_T_/layout',
+      '_N_T_/api/layout',
+      '_N_T_/api/users/layout',
+      '_N_T_/api/users/[handle]/layout',
+      '_N_T_/api/users/[handle]/route',
+      '_N_T_/api/users/7cbe1e'
+    ],
+    url: { pathname: '/api/users/7cbe1e', search: '' },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    usedDynamic: true
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false }
+}
+[API /api/users/[handle]] Extracted handle from URL: 7cbe1e
+[API /api/users/[handle]] Validated handle: 7cbe1e
+[API /api/users/[handle]] Found user: 7cbe1e
+ GET /api/users/7cbe1e 200 in 216ms
+ ✓ Compiled in 902ms (7663 modules)
+ GET /7cbe1e 200 in 62ms
