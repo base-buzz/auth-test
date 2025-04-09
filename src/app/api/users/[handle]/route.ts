@@ -7,13 +7,14 @@ const handleSchema = z.string().min(1);
 
 export async function GET(
   request: Request,
-  { params }: { params: { handle: string } } // Keep params in signature for logging
+  context: { params: { handle: string } } // Correct type for App Router
 ) {
+  const { params } = context; // Destructure params from context
   // Log the full request URL and the received params object
   console.log("[API /api/users/[handle]] Request URL:", request.url);
   console.log("[API /api/users/[handle]] Received params object:", params);
 
-  // Extract handle from URL
+  // Extract handle from URL (Current workaround - keep for now)
   const url = new URL(request.url);
   const pathSegments = url.pathname.split("/");
   const handleFromUrl = pathSegments.pop() || "";

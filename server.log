@@ -42648,3 +42648,431 @@ WalletConnect Core is already initialized. This is probably a mistake and can le
  ✓ Compiled /favicon.ico in 424ms (4185 modules)
  GET /favicon.ico 200 in 890ms
  GET /favicon.ico 200 in 206ms
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 7 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 8 times.
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 expirer_expired listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /7cbe1e 200 in 429ms
+ GET /favicon.ico 200 in 215ms
+ ○ Compiling /api/users/[handle] ...
+ ✓ Compiled /api/users/[handle] in 1663ms (4267 modules)
+[API /api/users/[handle]] Request URL: http://localhost:3334/api/users/7cbe1e
+[API /api/users/[handle]] Received params object: Promise {
+  <pending>,
+  handle: '7cbe1e',
+  [Symbol(async_id_symbol)]: 458012,
+  [Symbol(trigger_async_id_symbol)]: 457999,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api/users/[handle]/route',
+    fallbackRouteParams: null,
+    route: '/api/users/[handle]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      requestProtocol: 'http',
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isPrerendering: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    requestEndedState: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: bound onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    dynamicIOEnabled: false,
+    dev: false
+  },
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: [
+      '_N_T_/layout',
+      '_N_T_/api/layout',
+      '_N_T_/api/users/layout',
+      '_N_T_/api/users/[handle]/layout',
+      '_N_T_/api/users/[handle]/route',
+      '_N_T_/api/users/7cbe1e'
+    ],
+    url: { pathname: '/api/users/7cbe1e', search: '' },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    usedDynamic: true
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false }
+}
+[API /api/users/[handle]] Extracted handle from URL: 7cbe1e
+[API /api/users/[handle]] Validated handle: 7cbe1e
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 9 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 10 times.
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 relayer_message listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /favicon.ico 200 in 5292ms
+ GET /api/auth/session 200 in 5626ms
+2025-04-09T14:43:04.881Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:43:04.864Z"}
+ HEAD /7cbe1e 200 in 4767ms
+[API /api/users/[handle]] Found user: 7cbe1e
+ GET /api/users/7cbe1e 200 in 6548ms
+ ✓ Compiled in 854ms (3397 modules)
+ GET /7cbe1e 200 in 15ms
+ GET /favicon.ico 200 in 236ms
+ GET /api/auth/session 200 in 162ms
+2025-04-09T14:51:49.355Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:51:49.347Z"}
+ ✓ Compiled in 1787ms (3397 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /7cbe1e 200 in 95ms
+ GET /7cbe1e 200 in 113ms
+ GET /favicon.ico 200 in 223ms
+[API /api/users/[handle]] Request URL: http://localhost:3334/api/users/7cbe1e
+[API /api/users/[handle]] Received params object: Promise {
+  <pending>,
+  handle: '7cbe1e',
+  [Symbol(async_id_symbol)]: 486554,
+  [Symbol(trigger_async_id_symbol)]: 486544,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api/users/[handle]/route',
+    fallbackRouteParams: null,
+    route: '/api/users/[handle]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      requestProtocol: 'http',
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isPrerendering: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    requestEndedState: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: bound onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    dynamicIOEnabled: false,
+    dev: false
+  },
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: [
+      '_N_T_/layout',
+      '_N_T_/api/layout',
+      '_N_T_/api/users/layout',
+      '_N_T_/api/users/[handle]/layout',
+      '_N_T_/api/users/[handle]/route',
+      '_N_T_/api/users/7cbe1e'
+    ],
+    url: { pathname: '/api/users/7cbe1e', search: '' },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    usedDynamic: true
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false }
+}
+[API /api/users/[handle]] Extracted handle from URL: 7cbe1e
+[API /api/users/[handle]] Validated handle: 7cbe1e
+ GET /api/auth/session 200 in 57ms
+2025-04-09T14:51:52.503Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:51:52.502Z"}
+ ✓ Compiled in 520ms (3397 modules)
+ HEAD /7cbe1e 200 in 47ms
+ GET /favicon.ico 200 in 540ms
+ GET /7cbe1e 200 in 72ms
+ GET /favicon.ico 200 in 206ms
+[API /api/users/[handle]] Found user: 7cbe1e
+ GET /api/users/7cbe1e 200 in 1045ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ○ Compiling /profile ...
+ ✓ Compiled /profile in 1618ms (7667 modules)
+ GET /profile 200 in 1798ms
+ ○ Compiling /api/profile ...
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+No user address found in session
+ GET /api/profile 401 in 1603ms
+2025-04-09T14:51:59.798Z [WARN] Profile GET Failed - Unauthorized
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+No user address found in session
+ GET /api/profile 401 in 10ms
+2025-04-09T14:51:59.814Z [WARN] Profile GET Failed - Unauthorized
+ GET /profile 200 in 195ms
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 21ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 12ms
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 8ms
+No user address found in session
+ GET /api/profile 401 in 7ms
+2025-04-09T14:52:01.667Z [WARN] Profile GET Failed - Unauthorized
+No user address found in session
+ GET /api/profile 401 in 6ms
+2025-04-09T14:52:01.676Z [WARN] Profile GET Failed - Unauthorized
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /settings, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /settings 200 in 11ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 22ms
+No user address found in session
+ GET /api/profile 401 in 12ms
+2025-04-09T14:52:09.134Z [WARN] Profile GET Failed - Unauthorized
+No user address found in session
+ GET /api/profile 401 in 4ms
+2025-04-09T14:52:09.139Z [WARN] Profile GET Failed - Unauthorized
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 7ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 22ms
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+ GET /dashboard 200 in 454ms
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 uncaughtException listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 unhandledRejection listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+No user address found in session
+ GET /api/profile 401 in 548ms
+2025-04-09T14:52:18.433Z [WARN] Profile GET Failed - Unauthorized
+No user address found in session
+ GET /api/profile 401 in 729ms
+2025-04-09T14:52:19.175Z [WARN] Profile GET Failed - Unauthorized
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /dashboard 200 in 105ms
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /dashboard, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /dashboard 200 in 15ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 13ms
+No user address found in session
+ GET /api/profile 401 in 12ms
+2025-04-09T14:52:20.960Z [WARN] Profile GET Failed - Unauthorized
+No user address found in session
+ GET /api/profile 401 in 6ms
+2025-04-09T14:52:20.969Z [WARN] Profile GET Failed - Unauthorized
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 30ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 11 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 12 times.
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 pairing_create listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:17860) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 pairing_delete listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+ GET /profile 200 in 455ms
+ GET /favicon.ico 200 in 233ms
+ GET /api/auth/session 200 in 56ms
+2025-04-09T14:52:24.826Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:52:24.825Z"}
+No user address found in session
+ GET /api/profile 401 in 10ms
+2025-04-09T14:52:24.840Z [WARN] Profile GET Failed - Unauthorized
+ GET /favicon.ico 200 in 281ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ⚠ ./src/app/api/profile/route.ts
+Attempted import error: 'authOptions' is not exported from '@/app/api/auth/[...nextauth]/route' (imported as 'authOptions').
+
+Import trace for requested module:
+./src/app/api/profile/route.ts
+ HEAD /profile 200 in 2138ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 13ms
+ GET /favicon.ico 200 in 236ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 147ms
+ GET /favicon.ico 200 in 273ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ ✓ Compiled /dashboard in 3.1s (7688 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /api/auth/session 200 in 3208ms
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 13 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 14 times.
+ GET /favicon.ico 200 in 1548ms
+2025-04-09T14:52:33.430Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:52:33.430Z"}
+ HEAD /profile 200 in 2337ms
+ GET /profile 200 in 1040ms
+No user address found in session
+ GET /api/profile 401 in 257ms
+2025-04-09T14:52:34.131Z [WARN] Profile GET Failed - Unauthorized
+ ✓ Compiled in 588ms (3404 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /favicon.ico 200 in 348ms
+ GET /profile 200 in 89ms
+ ✓ Compiled in 262ms (3404 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 21ms
+ GET /favicon.ico 200 in 326ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 48ms
+ GET /favicon.ico 200 in 384ms
+ GET /api/auth/session 200 in 78ms
+2025-04-09T14:52:38.459Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:52:38.451Z"}
+No user address found in session
+ GET /api/profile 401 in 92ms
+2025-04-09T14:52:38.561Z [WARN] Profile GET Failed - Unauthorized
+ GET /favicon.ico 200 in 2403ms
+ ✓ Compiled in 3s (3404 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 201ms
+ ✓ Compiled in 456ms (3404 modules)
+ GET /favicon.ico 200 in 225ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 69ms
+ GET /favicon.ico 200 in 216ms
+ GET /api/auth/session 200 in 22ms
+2025-04-09T14:52:46.561Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:52:46.559Z"}
+No user address found in session
+ GET /api/profile 401 in 30ms
+2025-04-09T14:52:46.599Z [WARN] Profile GET Failed - Unauthorized
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /favicon.ico 200 in 489ms
+ HEAD /profile 200 in 122ms
+ ✓ Compiled in 975ms (3404 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 15ms
+ GET /favicon.ico 200 in 211ms
+ ✓ Compiled in 907ms (7688 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 70ms
+ GET /favicon.ico 200 in 216ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 15 times.
+WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 16 times.
+ GET /profile 200 in 165ms
+ GET /favicon.ico 200 in 237ms
+ GET /api/auth/session 200 in 177ms
+2025-04-09T14:52:50.487Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-08T14:52:50.487Z"}
+No user address found in session
+ GET /api/profile 401 in 23ms
+2025-04-09T14:52:50.512Z [WARN] Profile GET Failed - Unauthorized
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ HEAD /profile 200 in 232ms
+ ✓ Compiled in 487ms (3404 modules)
+ GET /favicon.ico 200 in 465ms
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 106ms
+ ✓ Compiled in 265ms (3404 modules)
+[Middleware Check] Path: /profile, Has Cookie: true, Token Status: Valid, UserID: 0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e
+ GET /profile 200 in 9ms
+ GET /favicon.ico 200 in 221ms
+ GET /favicon.ico 200 in 228ms

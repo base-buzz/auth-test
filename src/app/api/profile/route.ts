@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // REMOVED: No longer need authOptions directly
 import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
 import { logToServer } from "@/lib/logger"; // Import logger
@@ -16,7 +16,9 @@ if (!supabaseAdmin) {
 
 // Helper to get user address from session
 async function getUserAddress() {
-  const session = await getServerSession(authOptions);
+  // Fetch session using getServerSession without passing authOptions
+  // It will automatically use the options defined in the [...nextauth] route handler
+  const session = await getServerSession();
   if (!session?.user?.address) {
     console.warn("No user address found in session");
     return null;
