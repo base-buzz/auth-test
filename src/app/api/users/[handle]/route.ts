@@ -6,7 +6,7 @@ const handleSchema = z.string().min(1);
 
 export async function GET(
   req: NextRequest,
-  context: any // 🔥 THE MAGIC: using 'any' here bypasses Vercel's runtime type shape check
+  context: { params: { handle: string } }
 ) {
   const handle = context?.params?.handle;
 
