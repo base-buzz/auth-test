@@ -5,19 +5,24 @@ import { z } from "zod";
 // Zod schema for validating the handle string itself
 const handleSchema = z.string().min(1);
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { handle: string } }
-) {
-  // Validate the handle directly from params
-  const validation = handleSchema.safeParse(params?.handle);
+// Define context type OUTSIDE the function signature
+type Context = {
+  params: {
+    handle: string;
+  };
+};
+
+export async function GET(req: NextRequest, context: Context) {
+  // Access handle via context.params.handle
+  const { handle } = context.params;
+
+  const validation = handleSchema.safeParse(handle);
   if (!validation.success) {
     return NextResponse.json(
       { error: "Invalid handle format" },
       { status: 400 }
     );
   }
-  const handle = validation.data;
 
   // Restore Supabase client check and query logic
   if (!supabaseAdmin) {
