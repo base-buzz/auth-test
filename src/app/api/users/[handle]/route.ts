@@ -4,6 +4,7 @@ import { z } from "zod";
 
 // Zod schema for validating the handle string itself
 const handleSchema = z.string().min(1);
+// Trivial comment to force change detection
 
 export async function GET(
   request: Request,
