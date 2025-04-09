@@ -7,9 +7,9 @@ const handleSchema = z.string().min(1);
 
 export async function GET(
   request: Request,
-  context: { params: { handle: string } } // Correct type for App Router
+  routeContext: { params: { handle: string } } // Use routeContext to avoid conflict
 ) {
-  const { params } = context; // Destructure params from context
+  const { params } = routeContext; // Destructure params from routeContext
   // Log the full request URL and the received params object
   console.log("[API /api/users/[handle]] Request URL:", request.url);
   console.log("[API /api/users/[handle]] Received params object:", params);
