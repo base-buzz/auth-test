@@ -1,18 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
+import { supabaseAdmin } from "@/lib/supabase";
 
-// Zod schema for validation
 const handleSchema = z.string().min(1);
 
-// ✅ Define context type separately to avoid build failures
-type Context = {
-  params: {
-    handle: string;
-  };
-};
-
-export async function GET(req: NextRequest, context: Context) {
+export async function GET(
+  req: NextRequest,
+  context: { params: { handle: string } } // ✅ Inline, no destructuring!
+) {
   const { handle } = context.params;
 
   const validation = handleSchema.safeParse(handle);
@@ -31,13 +26,8 @@ export async function GET(req: NextRequest, context: Context) {
       .eq("handle", handle)
       .maybeSingle();
 
-    if (error) {
-      return NextResponse.json({ error: "DB error" }, { status: 500 });
-    }
-
-    if (!data) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+    if (error) return NextResponse.json({ error: "DB error" }, { status: 500 });
+    if (!data) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
     return NextResponse.json({
       address: data.address,
