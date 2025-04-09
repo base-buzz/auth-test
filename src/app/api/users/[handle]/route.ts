@@ -1,4 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
+// Import the canonical RouteHandlerContext type
+import { type RouteHandlerContext } from "next/dist/server/web/types";
 import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
 
@@ -9,14 +11,16 @@ const handleSchema = z.string().min(1);
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { handle: string } } // Correct signature with destructuring
+  context: RouteHandlerContext // Use RouteHandlerContext
 ) {
-  // Log the full request URL and the received params object
+  // Log the full request URL and the received context object
   console.log("[API /api/users/[handle]] Request URL:", request.url);
-  console.log("[API /api/users/[handle]] Received params object:", params);
+  // Note: context contains more than just params, log the whole thing for debugging if needed
+  console.log("[API /api/users/[handle]] Received context object:", context);
 
-  // Validate the handle directly from params
-  const validation = handleSchema.safeParse(params.handle);
+  // Validate the handle from context.params
+  // Add optional chaining for safety, though params should exist
+  const validation = handleSchema.safeParse(context.params?.handle);
   if (!validation.success) {
     console.error(
       "[API /api/users/[handle]] Handle validation failed:",
