@@ -6,7 +6,7 @@ const handleSchema = z.string().min(1);
 
 export async function GET(
   req: NextRequest,
-  context: { params: { handle: string } }
+  context: { params: { [key: string]: string | string[] | undefined } }
 ) {
   const handle = context?.params?.handle;
 
