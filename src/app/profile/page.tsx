@@ -40,7 +40,7 @@ export default function ProfilePage() {
   useEffect(() => {
     if (status === "authenticated" && session?.user?.address) {
       setIsLoading(true);
-      fetch("/api/profile") // API route to fetch profile
+      fetch("/api/profile", { credentials: "include" }) // Add credentials: 'include'
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch profile");
           return res.json();
@@ -96,6 +96,7 @@ export default function ProfilePage() {
         // API route to update profile
         method: "POST",
         body: formData,
+        credentials: "include", // Add credentials: 'include'
         // Content-Type is automatically set by browser for FormData
       });
 

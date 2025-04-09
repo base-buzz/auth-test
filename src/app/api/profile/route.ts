@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import { type NextRequest } from "next/server"; // Need NextRequest for getToken
 import { getServerSession } from "next-auth/next";
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // REMOVED: No longer need authOptions directly
 import { supabaseAdmin } from "@/lib/supabase";
@@ -14,13 +16,32 @@ if (!supabaseAdmin) {
   // throw new Error('Supabase client failed to initialize');
 }
 
-// Helper to get user address from session
+const secret = process.env.NEXTAUTH_SECRET;
+
+// Helper to get user address from session - USING getToken
+async function getUserAddressFromToken(req: NextRequest) {
+  if (!secret) {
+    console.error("NEXTAUTH_SECRET not set for getToken");
+    logToServer("ERROR", "getUserAddressFromToken - Missing NEXTAUTH_SECRET");
+    return null;
+  }
+  const token = await getToken({ req, secret });
+  if (!token?.sub) {
+    console.warn("No sub (address) found in token");
+    logToServer("WARN", "getUserAddressFromToken - No sub in token", { token });
+    return null;
+  }
+  return token.sub; // token.sub should be the user's address
+}
+
+// Re-add original helper using getServerSession for POST handler compatibility
 async function getUserAddress() {
-  // Fetch session using getServerSession without passing authOptions
-  // It will automatically use the options defined in the [...nextauth] route handler
   const session = await getServerSession();
   if (!session?.user?.address) {
-    console.warn("No user address found in session");
+    console.warn("No user address found in session (POST handler fallback)");
+    logToServer("WARN", "getUserAddress (POST) - No address in session", {
+      session,
+    });
     return null;
   }
   return session.user.address;
@@ -48,10 +69,10 @@ interface ProfileData {
 }
 
 // GET handler to fetch profile (with handle generation)
-export async function GET() {
-  const userAddress = await getUserAddress();
+export async function GET(request: NextRequest) {
+  const userAddress = await getUserAddressFromToken(request);
   if (!userAddress) {
-    logToServer("WARN", "Profile GET Failed - Unauthorized");
+    logToServer("WARN", "Profile GET Failed - Unauthorized (token check)");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
