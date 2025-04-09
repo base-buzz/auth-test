@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
 
@@ -7,7 +7,7 @@ const handleSchema = z.string().min(1);
 // Trivial comment to force change detection
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   routeContext: { params: { handle: string } } // Use routeContext to avoid conflict
 ) {
   const { params } = routeContext; // Destructure params from routeContext
