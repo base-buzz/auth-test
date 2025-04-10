@@ -1,190 +1,150 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-// import Image from "next/image"; // Removed as it's temporarily unused
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-// Type for public profile data
-interface PublicUserProfile {
-  address: string | null;
-  name: string | null;
-  pfp_url: string | null;
+interface UserProfile {
+  // Define based on the expected API response from /api/users/[handle]
+  display_name: string | null;
   bio: string | null;
-  handle: string | null;
-  created_at: string | null;
-  tier: string | null;
+  avatar_url: string | null;
+  handle: string;
+  address: string;
+  // Add other fields if returned by the API
 }
 
-export default function UserHandlePage() {
+export default function HandleProfilePage() {
+  // Call hooks unconditionally at the top
   const params = useParams();
-  const handle = params?.handle as string | undefined;
-  const [profile, setProfile] = useState<PublicUserProfile | null>(null);
+  const { data: session, status: sessionStatus } = useSession();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState(0); // State for retry attempts
 
-  const MAX_RETRIES = 3;
+  // Determine handle *after* hooks
+  const handle = params?.handle as string | undefined;
+
+  // Determine if the logged-in user is viewing their own profile
+  const isOwnProfile =
+    sessionStatus === "authenticated" && session?.user?.handle === handle;
 
   useEffect(() => {
+    // Validate handle inside useEffect before fetching
     if (!handle) {
-      // Handle case where handle might be missing or invalid early
       setError("Invalid user handle provided in URL.");
       setIsLoading(false);
-      return;
+      setProfile(null); // Ensure profile is null
+      return; // Stop the effect if handle is invalid
     }
 
-    // Only fetch if handle is present
-    const fetchProfile = async () => {
-      setIsLoading(true); // Set loading true at the start of each attempt
-      // Don't clear error on retry, let the final error persist
-      // setError(null); // Removed: Clear error only on initial load/handle change
+    setIsLoading(true);
+    setError(null); // Clear previous errors for new fetch
 
-      try {
-        const res = await fetch(`/api/users/${handle}`); // Fetch from the new API route
+    fetch(`/api/users/${handle}`)
+      .then(async (res) => {
         if (!res.ok) {
-          const errorData = await res
-            .json()
-            .catch(() => ({ error: "Failed to parse error response" }));
+          const errorData = await res.json().catch(() => ({}));
           throw new Error(
-            errorData.error || `User not found or server error (${res.status})`
+            errorData.error ||
+              `User not found or error fetching (${res.status})`
           );
         }
-        const data = await res.json();
+        return res.json();
+      })
+      .then((data) => {
         setProfile(data);
-        setError(null); // Clear error on success
-        setRetryCount(0); // Reset retry count on success
-        setIsLoading(false); // Stop loading on success
-      } catch (err: unknown) {
-        console.error(
-          `Attempt ${
-            retryCount + 1
-          }: Error fetching profile for handle ${handle}:`,
-          err
-        );
+      })
+      .catch((err) => {
+        console.error(`Error fetching profile for handle ${handle}:`, err);
+        setError(err.message);
+        setProfile(null);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // Add params to dependency array as handle depends on it, though handle alone is sufficient trigger
+  }, [handle, params]);
 
-        // Determine the error message safely
-        const errorMessage = err instanceof Error ? err.message : String(err);
-
-        if (retryCount < MAX_RETRIES - 1) {
-          setRetryCount((prevCount) => prevCount + 1); // Increment retry count to trigger re-fetch
-          // Keep isLoading true until max retries or success
-        } else {
-          setError(
-            `Failed to fetch profile after ${MAX_RETRIES} attempts: ${errorMessage}`
-          ); // Use safe error message
-          setProfile(null); // Clear profile on final error
-          setIsLoading(false); // Stop loading after max retries
-        }
-      }
-      // Don't set isLoading false here if retrying
-      // finally is tricky with async/await inside useEffect when managing retries
-    };
-
-    fetchProfile();
-
-    // Effect cleanup function (optional, not strictly needed here)
-    // return () => {
-    //  console.log("Cleanup effect");
-    // };
-  }, [handle, retryCount]); // Re-run effect if handle or retryCount changes
-
-  // Reset retry count if the handle changes
-  useEffect(() => {
-    setRetryCount(0);
-    setError(null); // Also clear error when handle changes
-  }, [handle]);
-
+  // Loading state
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p>Loading profile...</p>
+      <div className="container mx-auto p-8 text-center">
+        Loading profile...
       </div>
     );
   }
 
+  // Error state (covers invalid handle from useEffect as well)
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-red-500">Error: {error}</p>
+      <div className="container mx-auto p-8 text-center text-red-500">
+        Error: {error}
       </div>
     );
   }
 
+  // Profile not found state (after loading and no error)
   if (!profile) {
-    // This state might be reached if handle is invalid or fetch resulted in error before setting profile
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p>User profile could not be loaded.</p>
+      <div className="container mx-auto p-8 text-center">
+        User profile not found.
       </div>
     );
   }
 
-  // Basic Profile Display
+  // Successful profile display
   return (
-    <main className="container mx-auto p-4 md:p-8 max-w-3xl">
-      <div className="flex flex-col items-center md:flex-row md:items-start gap-8">
-        {/* Profile Picture */}
-        <div className="flex-shrink-0">
-          {profile.pfp_url ? (
-            // TEMPORARILY using <img> instead of <Image> for diagnostics
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={profile.pfp_url}
-              alt={`${profile.name || handle}'s profile picture`}
-              width={128}
-              height={128}
-              className="rounded-full border-4 border-muted object-cover w-32 h-32 md:w-48 md:h-48"
-              // priority prop doesn't exist on <img>
-            />
-          ) : (
-            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-              No Image
-            </div>
-          )}
-        </div>
-
-        {/* Profile Details */}
-        <div className="text-center md:text-left flex-grow">
-          <h1 className="text-3xl md:text-4xl font-bold mb-1">
-            {profile.name ?? handle}
+    <main className="container mx-auto p-4 md:p-8 max-w-2xl">
+      <div className="flex justify-between items-center mb-6">
+        {isOwnProfile ? (
+          <h1 className="text-2xl font-bold">
+            Welcome, {profile?.display_name || `@${profile?.handle}`}!
           </h1>
-          <p className="text-lg text-muted-foreground mb-3">
-            @{profile.handle}
-          </p>
-          {profile.tier && (
-            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 mb-3">
-              {profile.tier.toUpperCase()} Tier
-            </span>
-          )}
-          <p className="mb-4">
-            {profile.bio ?? (
-              <span className="text-muted-foreground italic">
-                No bio available.
-              </span>
-            )}
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Wallet:{" "}
-            <span className="font-mono text-xs">
-              {profile.address ?? "N/A"}
-            </span>
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Joined:{" "}
-            {profile.created_at
-              ? new Date(profile.created_at).toLocaleDateString()
-              : "N/A"}
-          </p>
-        </div>
+        ) : (
+          <h1 className="text-2xl font-bold">
+            Profile: {profile?.display_name || `@${profile?.handle}`}
+          </h1>
+        )}
+        {isOwnProfile && (
+          <Link href="/profile" passHref>
+            <Button variant="outline">Edit Profile</Button>
+          </Link>
+        )}
       </div>
 
-      {/* Placeholder for user's content/activity */}
-      <div className="mt-12 border-t pt-8">
-        <h2 className="text-2xl font-semibold mb-4">Activity</h2>
-        <p className="text-muted-foreground">
-          User activity feed (e.g., posts) would go here.
+      <div className="flex flex-col items-center space-y-4 mb-6">
+        {profile.avatar_url ? (
+          <Image
+            src={profile.avatar_url}
+            alt={`${profile.display_name || profile.handle}'s profile picture`}
+            width={128}
+            height={128}
+            className="w-32 h-32 rounded-full object-cover border"
+            priority
+          />
+        ) : (
+          <div className="w-32 h-32 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
+            No Image
+          </div>
+        )}
+        <h2 className="text-xl font-semibold">
+          {profile.display_name || `@${profile.handle}`}
+        </h2>
+        <p className="text-sm text-muted-foreground font-mono break-all">
+          {profile.address}
         </p>
       </div>
+
+      {profile.bio && (
+        <div className="mt-4 p-4 border rounded bg-card">
+          <h2 className="text-lg font-semibold mb-2">Bio</h2>
+          <p className="text-card-foreground">{profile.bio}</p>
+        </div>
+      )}
     </main>
   );
 }

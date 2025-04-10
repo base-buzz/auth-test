@@ -41,8 +41,8 @@ export async function GET(
 
     return NextResponse.json({
       address: data.address,
-      name: data.display_name,
-      pfp_url: data.avatar_url,
+      display_name: data.display_name,
+      avatar_url: data.avatar_url,
       bio: data.bio,
       handle: data.handle,
       created_at: data.created_at,

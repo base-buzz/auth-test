@@ -7,11 +7,6 @@ import { signIn, signOut, useSession, getCsrfToken } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-
-interface HomeProfile {
-  handle: string | null;
-}
 
 export default function Home() {
   const { address, chainId, isConnected } = useAccount();
@@ -20,30 +15,19 @@ export default function Home() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [signInError, setSignInError] = useState<string | null>(null);
   const router = useRouter();
-  const [profile, setProfile] = useState<HomeProfile | null>(null);
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "authenticated" && session?.user?.handle) {
       console.log(
-        "[CLIENT] User is authenticated, redirecting from / to /dashboard"
+        `[CLIENT] User authenticated with handle, redirecting from / to /${session.user.handle}`
       );
-      router.push("/dashboard");
+      router.push(`/${session.user.handle}`);
+    } else if (status === "authenticated" && !session?.user?.handle) {
+      console.log(
+        "[CLIENT] User authenticated but handle not yet available in session, waiting..."
+      );
     }
-  }, [status, router]);
-
-  useEffect(() => {
-    if (status === "authenticated" && !profile) {
-      fetch("/api/profile")
-        .then((res) =>
-          res.ok ? res.json() : Promise.reject("Failed to fetch profile")
-        )
-        .then((data) => setProfile(data))
-        .catch((err) => console.error("Error fetching profile on home:", err));
-    }
-    if (status === "unauthenticated" && profile) {
-      setProfile(null);
-    }
-  }, [status, profile]);
+  }, [status, session, router]);
 
   const handleSignIn = async () => {
     if (!address || !chainId) {
@@ -99,8 +83,9 @@ export default function Home() {
         console.error("[CLIENT] Sign-in failed:", signInResponse.error);
         setSignInError("Sign-in failed. Please try again.");
       } else if (signInResponse?.ok) {
-        console.log("[CLIENT] Sign-in successful, redirecting to /profile...");
-        router.push("/profile");
+        console.log(
+          "[CLIENT] Sign-in successful via credentials, session will update and trigger redirect."
+        );
       }
     } catch (error: unknown) {
       const message =
@@ -136,26 +121,16 @@ export default function Home() {
 
         {status === "authenticated" && session?.user?.address && (
           <div className="text-center mt-4 space-y-3">
-            <div>
-              <p>Signed in as:</p>
-              <p className="font-mono break-all">{session.user.address}</p>
-            </div>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {profile?.handle && (
-                <Link href={`/${profile.handle}`} passHref>
-                  <Button variant="secondary">View Public Profile</Button>
-                </Link>
-              )}
-              <Link href="/dashboard" passHref>
-                <Button variant="outline">Dashboard</Button>
-              </Link>
-              <Link href="/profile" passHref>
-                <Button variant="outline">Edit Profile</Button>
-              </Link>
-              <Button onClick={handleSignOut} variant="destructive">
-                Sign Out
-              </Button>
-            </div>
+            <p>Welcome!</p>
+            <p className="font-mono break-all">{session.user.address}</p>
+            {session.user.handle ? (
+              <p>Redirecting to your profile ({session.user.handle})...</p>
+            ) : (
+              <p>Authenticating, please wait...</p>
+            )}
+            <Button onClick={handleSignOut} variant="destructive">
+              Sign Out
+            </Button>
           </div>
         )}
 

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { type NextRequest } from "next/server"; // Need NextRequest for getToken
-import { getServerSession } from "next-auth/next";
+// import { getServerSession } from "next-auth/next"; // No longer needed for POST
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // REMOVED: No longer need authOptions directly
 import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
@@ -32,19 +32,6 @@ async function getUserAddressFromToken(req: NextRequest) {
     return null;
   }
   return token.sub; // token.sub should be the user's address
-}
-
-// Re-add original helper using getServerSession for POST handler compatibility
-async function getUserAddress() {
-  const session = await getServerSession();
-  if (!session?.user?.address) {
-    console.warn("No user address found in session (POST handler fallback)");
-    logToServer("WARN", "getUserAddress (POST) - No address in session", {
-      session,
-    });
-    return null;
-  }
-  return session.user.address;
 }
 
 // Zod schema for profile data validation
@@ -222,10 +209,10 @@ export async function GET(request: NextRequest) {
 }
 
 // POST handler to update profile
-export async function POST(req: Request) {
-  const userAddress = await getUserAddress();
+export async function POST(req: NextRequest) {
+  const userAddress = await getUserAddressFromToken(req);
   if (!userAddress) {
-    logToServer("WARN", "Profile POST Failed - Unauthorized");
+    logToServer("WARN", "Profile POST Failed - Unauthorized (token check)");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -319,10 +306,14 @@ export async function POST(req: Request) {
         console.warn("Supabase storage remove error (ignored):", removeError);
       }
 
-      // Upload the new file
+      // Upload the new file with cache control
       const { error: uploadError } = await supabaseAdmin.storage
         .from("post_images")
-        .upload(filePath, pfpFile, { upsert: true, contentType: pfpFile.type });
+        .upload(filePath, pfpFile, {
+          upsert: true,
+          contentType: pfpFile.type,
+          cacheControl: "0",
+        });
 
       if (uploadError) {
         console.error("Supabase storage upload error:", uploadError);
