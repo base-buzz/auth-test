@@ -182,6 +182,7 @@ export const authOptions: NextAuthOptions = {
       // ** WARNING: Critical Auth Logic - Authorize Function **
       // This function verifies the SIWE signature. Changes here WILL break login.
       // Consult AUTH.md before modifying.
+      // ** OPERATOR APPROVAL REQUIRED for any modifications. **
       // **********************************************************
       async authorize(credentials, req) {
         const addressFromMessage = credentials?.message
@@ -286,6 +287,7 @@ export const authOptions: NextAuthOptions = {
     // This callback adds custom data (handle) to the JWT.
     // Changes here affect session data availability.
     // Consult AUTH.md before modifying.
+    // ** OPERATOR APPROVAL REQUIRED for any modifications. **
     // ***************************************************
     async jwt({ token, user, account, isNewUser }) {
       const tokenSub = token?.sub;
@@ -335,6 +337,7 @@ export const authOptions: NextAuthOptions = {
     // This callback transfers data from JWT to the client-side session object.
     // Changes here affect data available via useSession().
     // Consult AUTH.md before modifying.
+    // ** OPERATOR APPROVAL REQUIRED for any modifications. **
     // *******************************************************
     async session({ session, token }) {
       const tokenSub = token?.sub;

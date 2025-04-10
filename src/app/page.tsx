@@ -51,6 +51,7 @@ export default function Home() {
   // Changes to CSRF token fetching, message creation, signing, or the
   // call to `signIn('credentials', ...)` WILL break login.
   // Consult AUTH.md before modifying.
+  // ** OPERATOR APPROVAL REQUIRED for any modifications. **
   // ***********************************************************
   const handleSignIn = async () => {
     if (!address || !chainId) {

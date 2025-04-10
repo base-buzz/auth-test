@@ -3,6 +3,7 @@
 // NextAuth.js jwt and session callbacks (src/app/api/auth/[...nextauth]/route.ts).
 // Mismatches will cause TypeScript errors and potentially runtime issues.
 // Consult AUTH.md for details on the auth flow.
+// ** OPERATOR APPROVAL REQUIRED for any modifications. **
 // ***************************************************************************
 
 import type { DefaultSession, DefaultUser } from "next-auth";
