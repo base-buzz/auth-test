@@ -43664,3 +43664,24 @@ WalletConnect Core is already initialized. This is probably a mistake and can le
 2025-04-09T15:00:11.477Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
  ✓ Compiled in 1081ms (3402 modules)
  ✓ Compiled in 313ms (3402 modules)
+2025-04-10T09:08:34.656Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-09T09:08:34.654Z"}
+2025-04-10T09:08:34.667Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-09T09:08:34.666Z"}
+2025-04-10T09:08:38.011Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:08:38.724Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:09:44.395Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-09T09:09:44.393Z"}
+2025-04-10T09:09:45.569Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:09:47.508Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:09:47.825Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:09:49.438Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T09:09:49.731Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:15.354Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-09T10:16:15.335Z"}
+2025-04-10T10:16:18.832Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:19.053Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:19.649Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:23.236Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:23.853Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:24.804Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:25.072Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:26.998Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:16:27.245Z [INFO] Profile GET Success - Data: {"address":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e"}
+2025-04-10T10:34:08.770Z [INFO] NextAuth Session Event - Data: {"userId":"0x9cf6c7eBa6546998AFA1c1d8a9B124193a7cbe1e","expires":"2025-07-09T10:34:08.759Z"}
