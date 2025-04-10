@@ -1,3 +1,10 @@
+// ** WARNING: Critical Auth Types **
+// These types MUST be kept in sync with the data added in the
+// NextAuth.js jwt and session callbacks (src/app/api/auth/[...nextauth]/route.ts).
+// Mismatches will cause TypeScript errors and potentially runtime issues.
+// Consult AUTH.md for details on the auth flow.
+// ***************************************************************************
+
 import type { DefaultSession, DefaultUser } from "next-auth";
 import type { JWT as DefaultJWT } from "next-auth/jwt";
 

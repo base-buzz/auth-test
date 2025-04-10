@@ -46,6 +46,12 @@ export default function Home() {
     // No redirect needed if loading or unauthenticated
   }, [status, session, router]);
 
+  // ** WARNING: Critical Auth Logic - SIWE Sign-In Handler **
+  // This function orchestrates the client-side SIWE flow.
+  // Changes to CSRF token fetching, message creation, signing, or the
+  // call to `signIn('credentials', ...)` WILL break login.
+  // Consult AUTH.md before modifying.
+  // ***********************************************************
   const handleSignIn = async () => {
     if (!address || !chainId) {
       console.error("[CLIENT] Wallet not connected or chainId missing");

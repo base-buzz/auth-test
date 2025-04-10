@@ -1,22 +1,19 @@
-import fs from "fs";
-import path from "path";
-
-const logFilePath = path.join(process.cwd(), "server.log");
-
 /**
  * src/lib/logger.ts
  *
  * Simple server-side logging utility.
  * Currently logs messages to the console.
- * TODO: Enhance with a more robust logging library (e.g., Pino, Winston)
- *       and potentially send logs to a dedicated service.
+ * TODO: Enhance with a more robust logging library or API endpoint for client logs.
  */
 
-// Define allowed log levels (adjust as needed)
-export type LogLevel = "INFO" | "WARN" | "ERROR"; // Removed DEBUG/FATAL for now
+// Removed imports for server-only modules
+// import fs from "fs";
+// import path from "path";
+
+export type LogLevel = "INFO" | "WARN" | "ERROR";
 
 /**
- * Logs a message and optional data payload to the server console.
+ * Logs a message and optional data payload to the server/browser console.
  * Prepends log level and timestamp.
  *
  * @param level - The severity level (INFO, WARN, ERROR).
@@ -29,50 +26,33 @@ export function logToServer(
   data?: Record<string, unknown>
 ) {
   const timestamp = new Date().toISOString();
-  let logEntry = `${timestamp} [${level}] ${message}`;
-  if (data) {
-    try {
-      // Attempt to stringify data, handle circular references
-      const dataString = JSON.stringify(
-        data,
-        (key, value) => (typeof value === "bigint" ? value.toString() : value) // Convert BigInts
-      );
-      logEntry += ` - Data: ${dataString}`;
-    } catch (error) {
-      logEntry += ` - Data: [Could not stringify data - ${
-        error instanceof Error ? error.message : "Unknown error"
-      }]`;
-    }
-  }
-  logEntry += "\n"; // Add newline
 
-  fs.appendFile(logFilePath, logEntry, (err) => {
-    if (err) {
-      console.error("Failed to write to log file:", err);
-    }
-  });
-
-  // Basic console logging
-  console.log(
+  // Use console logging which works on both server and client
+  const logArgs: [string, Record<string, unknown>?] = [
     `[${timestamp}] [${level}] ${message}`,
-    data !== undefined ? JSON.stringify(data, null, 2) : ""
-  );
+  ];
+  if (data !== undefined) {
+    logArgs.push(data);
+  }
 
-  // FUTURE: Implement more advanced logging here
-  // Example with Pino (requires installation and setup):
-  // import pino from 'pino';
-  // const logger = pino();
-  // switch (level) {
-  //   case 'INFO':
-  //     logger.info(data, message);
-  //     break;
-  //   case 'WARN':
-  //     logger.warn(data, message);
-  //     break;
-  //   case 'ERROR':
-  //     logger.error(data, message);
-  //     break;
-  // }
+  switch (level) {
+    case "INFO":
+      console.info(...logArgs);
+      break;
+    case "WARN":
+      console.warn(...logArgs);
+      break;
+    case "ERROR":
+      console.error(...logArgs);
+      break;
+    default:
+      console.log(...logArgs); // Fallback
+  }
+
+  // Removed file writing logic as it breaks client components
+  // const logFilePath = path.join(process.cwd(), "server.log");
+  // const logEntry = `${timestamp} [${level}] ${message}${data ? `: ${JSON.stringify(data)}` : ""}`;
+  // fs.appendFile(logFilePath, logEntry + '\n', (err) => { ... });
 }
 
 // Example usage:

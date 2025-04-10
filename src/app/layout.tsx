@@ -4,7 +4,7 @@
  * Root layout for the application.
  * Sets up global styles, fonts, providers (RainbowKit, Wagmi, SessionProvider).
  */
-import "@/styles/globals.css";
+import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "@/providers/Providers";
 import { cn } from "@/lib/utils";

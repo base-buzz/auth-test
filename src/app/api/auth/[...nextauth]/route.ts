@@ -179,7 +179,10 @@ export const authOptions: NextAuthOptions = {
         message: { label: "Message", type: "text", placeholder: "0x0" },
         signature: { label: "Signature", type: "text", placeholder: "0x0" },
       },
-      // Authorize function: Verifies the SIWE message and signature
+      // ** WARNING: Critical Auth Logic - Authorize Function **
+      // This function verifies the SIWE signature. Changes here WILL break login.
+      // Consult AUTH.md before modifying.
+      // **********************************************************
       async authorize(credentials, req) {
         const addressFromMessage = credentials?.message
           ? JSON.parse(credentials.message).address
@@ -279,8 +282,11 @@ export const authOptions: NextAuthOptions = {
     maxAge: 90 * 24 * 60 * 60, // 90 days in seconds
   },
   callbacks: {
-    // JWT Callback: Called when JWT is created/updated.
-    // Used here to persist the user handle in the token.
+    // ** WARNING: Critical Auth Logic - JWT Callback **
+    // This callback adds custom data (handle) to the JWT.
+    // Changes here affect session data availability.
+    // Consult AUTH.md before modifying.
+    // ***************************************************
     async jwt({ token, user, account, isNewUser }) {
       const tokenSub = token?.sub;
       // Check if this is the initial sign-in event
@@ -325,8 +331,11 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
-    // Session Callback: Called when session is checked.
-    // Used to add custom data from the JWT token to the session object available on the client.
+    // ** WARNING: Critical Auth Logic - Session Callback **
+    // This callback transfers data from JWT to the client-side session object.
+    // Changes here affect data available via useSession().
+    // Consult AUTH.md before modifying.
+    // *******************************************************
     async session({ session, token }) {
       const tokenSub = token?.sub;
       // Add address and handle from token to the session object
