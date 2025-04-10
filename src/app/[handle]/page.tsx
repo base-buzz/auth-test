@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
+// import Image from "next/image"; // Removed unused import
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -118,13 +118,15 @@ export default function HandleProfilePage() {
 
       <div className="flex flex-col items-center space-y-4 mb-6">
         {profile.avatar_url ? (
-          <Image
+          // Temporarily use standard <img> tag for diagnostics
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={profile.avatar_url}
             alt={`${profile.display_name || profile.handle}'s profile picture`}
-            width={128}
-            height={128}
+            // width={128} // Use CSS for sizing
+            // height={128}
             className="w-32 h-32 rounded-full object-cover border"
-            priority
+            // priority is not applicable to standard img
           />
         ) : (
           <div className="w-32 h-32 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
