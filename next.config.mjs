@@ -10,7 +10,7 @@ const nextConfig = {
         protocol: "https",
         hostname: supabaseImageHostname || "default.supabase.co", // Fallback needed if var not set
         port: "",
-        pathname: "/storage/v1/object/public/**", // Allow any path in public storage
+        pathname: "/**", // Changed from /storage/v1/object/public/**
       },
       // Add other domains if needed
     ],
