@@ -1,3 +1,9 @@
+/**
+ * src/app/page.tsx
+ *
+ * Home page component.
+ * Handles wallet connection, SIWE authentication flow, and redirects authenticated users.
+ */
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -7,6 +13,12 @@ import { signIn, signOut, useSession, getCsrfToken } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+// import Link from "next/link"; // Removed unused import
+
+// No profile needed here anymore
+// interface HomeProfile {
+//   handle: string | null;
+// }
 
 export default function Home() {
   const { address, chainId, isConnected } = useAccount();
@@ -16,29 +28,34 @@ export default function Home() {
   const [signInError, setSignInError] = useState<string | null>(null);
   const router = useRouter();
 
+  // Redirect logic after authentication
   useEffect(() => {
+    // Only redirect if authenticated and handle is present
     if (status === "authenticated" && session?.user?.handle) {
+      const targetPath = `/${session.user.handle}`;
       console.log(
-        `[CLIENT] User authenticated with handle, redirecting from / to /${session.user.handle}`
+        `[CLIENT] User authenticated with handle, redirecting from / to ${targetPath}`
       );
-      router.push(`/${session.user.handle}`);
+      router.push(targetPath);
     } else if (status === "authenticated" && !session?.user?.handle) {
+      // Wait for handle to become available in session
       console.log(
         "[CLIENT] User authenticated but handle not yet available in session, waiting..."
       );
     }
+    // No redirect needed if loading or unauthenticated
   }, [status, session, router]);
 
   const handleSignIn = async () => {
     if (!address || !chainId) {
-      console.error("Wallet not connected or chainId missing");
+      console.error("[CLIENT] Wallet not connected or chainId missing");
       setSignInError("Please connect your wallet first.");
       return;
     }
 
     setIsSigningIn(true);
     setSignInError(null);
-    console.log("[CLIENT] handleSignIn started");
+    console.log("[CLIENT] handleSignIn started for address:", address);
 
     try {
       console.log("[CLIENT] Fetching CSRF token...");
@@ -48,14 +65,14 @@ export default function Home() {
         throw new Error("Failed to fetch CSRF token for SIWE nonce.");
       }
       console.log(
-        "[CLIENT] CSRF token obtained:",
-        csrfToken ? csrfToken.substring(0, 10) + "..." : "null"
+        "[CLIENT] CSRF token obtained: ",
+        csrfToken.substring(0, 10) + "..."
       );
 
       const message = new SiweMessage({
         domain: window.location.host,
         address,
-        statement: "Sign in with Ethereum to the app.",
+        statement: "Sign in with Ethereum to the app.", // Consider making statement more specific
         uri: window.location.origin,
         version: "1",
         chainId,
@@ -67,31 +84,44 @@ export default function Home() {
         message: message.prepareMessage(),
       });
       console.log(
-        "[CLIENT] Signature obtained:",
-        signature ? signature.substring(0, 20) + "..." : "null"
+        "[CLIENT] Signature obtained: ",
+        signature.substring(0, 20) + "..."
       );
 
       console.log("[CLIENT] Calling signIn('credentials')...");
       const signInResponse = await signIn("credentials", {
         message: JSON.stringify(message),
         signature,
-        redirect: false,
+        redirect: false, // Important: Handle redirect manually via useEffect
       });
       console.log("[CLIENT] signIn response:", signInResponse);
 
       if (signInResponse?.error) {
-        console.error("[CLIENT] Sign-in failed:", signInResponse.error);
-        setSignInError("Sign-in failed. Please try again.");
+        // Handle specific SIWE errors if possible, otherwise show generic message
+        console.error(
+          "[CLIENT] Sign-in callback failed:",
+          signInResponse.error
+        );
+        setSignInError(`Sign-in failed: ${signInResponse.error}`); // Show specific error if available
       } else if (signInResponse?.ok) {
+        // Session will update, useEffect will handle redirect
         console.log(
           "[CLIENT] Sign-in successful via credentials, session will update and trigger redirect."
         );
       }
+      // Handle case where signInResponse is null/undefined (should not happen ideally)
+      else if (!signInResponse) {
+        console.error(
+          "[CLIENT] signIn response was unexpectedly null/undefined"
+        );
+        setSignInError("Sign-in process did not complete as expected.");
+      }
     } catch (error: unknown) {
+      // Catch errors from getCsrfToken, signMessageAsync, or network issues
       const message =
         error instanceof Error
           ? error.message
-          : "An unexpected error occurred.";
+          : "An unexpected error occurred during sign-in.";
       console.error("[CLIENT] Error in handleSignIn:", error);
       setSignInError(message);
     } finally {
@@ -102,50 +132,63 @@ export default function Home() {
 
   const handleSignOut = async () => {
     console.log("[CLIENT] handleSignOut started");
-    await signOut({ redirect: false, callbackUrl: "/" });
-    console.log("[CLIENT] signOut called");
+    await signOut({ redirect: false }); // Let page reload handle state change
+    console.log("[CLIENT] signOut called, session should clear");
+    // Optional: router.push('/') if immediate redirect desired
+  };
+
+  // Render different content based on session status and connection status
+  const renderContent = () => {
+    if (status === "loading") {
+      return <p>Loading session...</p>;
+    }
+
+    if (status === "authenticated") {
+      // Display minimal info while waiting for redirect
+      return (
+        <div className="text-center mt-4 space-y-3">
+          <p>Welcome!</p>
+          <p className="font-mono break-all">{session.user.address}</p>
+          {session.user.handle ? (
+            <p>Redirecting to your profile (@{session.user.handle})...</p>
+          ) : (
+            <p>Finalizing authentication...</p> // Changed waiting message
+          )}
+          <Button onClick={handleSignOut} variant="destructive">
+            Sign Out
+          </Button>
+        </div>
+      );
+    }
+
+    // Unauthenticated
+    if (!isConnected) {
+      return <p className="mt-4">Please connect your wallet.</p>;
+    }
+
+    // Unauthenticated but connected
+    return (
+      <Button onClick={handleSignIn} disabled={isSigningIn} className="mt-4">
+        {isSigningIn ? "Signing In..." : "Sign In With Ethereum"}
+      </Button>
+    );
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <div className="flex min-h-screen flex-col items-center justify-center p-6 md:p-24">
+      {" "}
+      {/* Adjusted padding */}
       <div className="z-10 w-full max-w-5xl font-mono text-sm mb-8 text-center">
-        <h1 className="text-2xl font-bold">Wagmi + SIWE + Supabase Auth</h1>
+        {/* Update title for base.buzz */}
+        <h1 className="text-2xl font-bold">Base Buzz Authentication</h1>
       </div>
-
       <div className="flex flex-col items-center gap-4">
         <ConnectButton />
-
         {signInError && (
-          <p className="text-red-500 mt-2">Error: {signInError}</p>
+          <p className="text-red-500 mt-2 text-center">Error: {signInError}</p> // Centered error
         )}
-
-        {status === "authenticated" && session?.user?.address && (
-          <div className="text-center mt-4 space-y-3">
-            <p>Welcome!</p>
-            <p className="font-mono break-all">{session.user.address}</p>
-            {session.user.handle ? (
-              <p>Redirecting to your profile ({session.user.handle})...</p>
-            ) : (
-              <p>Authenticating, please wait...</p>
-            )}
-            <Button onClick={handleSignOut} variant="destructive">
-              Sign Out
-            </Button>
-          </div>
-        )}
-
-        {status === "unauthenticated" && isConnected && (
-          <Button
-            onClick={handleSignIn}
-            disabled={isSigningIn}
-            className="mt-4"
-          >
-            {isSigningIn ? "Signing In..." : "Sign In With Ethereum"}
-          </Button>
-        )}
-
-        {status === "loading" && <p>Loading session...</p>}
+        {renderContent()} {/* Render dynamic content */}
       </div>
-    </main>
+    </div>
   );
 }

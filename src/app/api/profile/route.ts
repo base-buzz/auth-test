@@ -1,3 +1,10 @@
+/**
+ * src/app/api/profile/route.ts
+ *
+ * API route for fetching and updating the logged-in user's profile.
+ * GET: Retrieves profile data, ensuring user/handle exists.
+ * POST: Updates profile (name, bio, PFP), handles PFP upload.
+ */
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { type NextRequest } from "next/server"; // Need NextRequest for getToken
@@ -7,117 +14,147 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { z } from "zod";
 import { logToServer } from "@/lib/logger"; // Import logger
 
-// Ensure Supabase client is available
+// --- Constants (defined globally for potential use in both handlers) --- //
+const MAX_PFP_SIZE_MB = 5;
+const MAX_PFP_SIZE_BYTES = MAX_PFP_SIZE_MB * 1024 * 1024;
+const ALLOWED_PFP_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+];
+const PFP_STORAGE_BUCKET = "post_images"; // Ensure this matches your bucket name
+
+// --- Environment Checks --- //
 if (!supabaseAdmin) {
-  console.error(
-    "FATAL: Supabase client is not initialized. Check environment variables."
+  // Logged during client initialization, but double-check
+  logToServer(
+    "ERROR",
+    "API /profile - Supabase client not initialized at route level"
   );
-  // Optionally throw an error or handle it based on your application needs
-  // throw new Error('Supabase client failed to initialize');
+  // Avoid throwing here to allow potential error response
 }
 
 const secret = process.env.NEXTAUTH_SECRET;
-
-// Helper to get user address from session - USING getToken
-async function getUserAddressFromToken(req: NextRequest) {
-  if (!secret) {
-    console.error("NEXTAUTH_SECRET not set for getToken");
-    logToServer("ERROR", "getUserAddressFromToken - Missing NEXTAUTH_SECRET");
-    return null;
-  }
-  const token = await getToken({ req, secret });
-  if (!token?.sub) {
-    console.warn("No sub (address) found in token");
-    logToServer("WARN", "getUserAddressFromToken - No sub in token", { token });
-    return null;
-  }
-  return token.sub; // token.sub should be the user's address
+if (!secret) {
+  // Should be caught by auth route startup check, but log defensively
+  logToServer("ERROR", "API /profile - NEXTAUTH_SECRET missing");
 }
 
-// Zod schema for profile data validation
+// --- Helper: Get User Address --- //
+// Extracts user address (ID) from the session token.
+async function getUserAddressFromToken(
+  req: NextRequest
+): Promise<string | null> {
+  if (!secret) {
+    // Already logged above
+    return null;
+  }
+  try {
+    const token = await getToken({ req, secret });
+    if (!token?.sub) {
+      logToServer("WARN", "API /profile - No sub (address) found in token", {
+        tokenExists: !!token,
+      });
+      return null;
+    }
+    return token.sub;
+  } catch (error) {
+    logToServer("ERROR", "API /profile - Error getting token", { error });
+    return null;
+  }
+}
+
+// --- Zod Schema for Profile Update Data --- //
 const profileSchema = z.object({
   name: z.string().max(100).optional().nullable(),
   bio: z.string().max(500).optional().nullable(),
 });
 
-// Define a more specific type for the expected profile data
-// This should match the fields selected in selectFields
+// --- Type for Supabase User Data (Subset) --- //
+// Defines the expected shape of data selected from the users table.
 interface ProfileData {
   address: string;
   display_name: string | null;
   bio: string | null;
   avatar_url: string | null;
   handle: string | null;
-  email: string | null;
-  tier: string | null;
-  location: string | null;
-  created_at: string | null;
-  // Add other selected fields if any
+  // Add other fields if selected in GET handler
+  // email: string | null;
+  // tier: string | null;
+  // location: string | null;
+  // created_at: string | null;
 }
 
-// GET handler to fetch profile (with handle generation)
+// === GET Handler: Fetch User Profile === //
 export async function GET(request: NextRequest) {
   const userAddress = await getUserAddressFromToken(request);
   if (!userAddress) {
-    logToServer("WARN", "Profile GET Failed - Unauthorized (token check)");
+    // getUserAddressFromToken logs details
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   if (!supabaseAdmin) {
-    logToServer("ERROR", "Profile GET Failed - Supabase Client Unavailable");
+    logToServer("ERROR", "Profile GET - Supabase Client Unavailable", {
+      address: userAddress,
+    });
     return NextResponse.json(
-      { error: "Supabase client not available" },
+      { error: "Server configuration error" },
       { status: 500 }
     );
   }
 
-  const selectFields =
-    "address, display_name, bio, avatar_url, handle, email, tier, location, created_at";
-  let profileData: ProfileData | null = null; // Use the specific type
-  let fetchError: unknown = null; // Use unknown for errors
+  // Select fields expected by the frontend (/profile page)
+  const selectFields = "address, display_name, bio, avatar_url, handle";
 
   try {
-    // 1. Try to fetch existing user
-    const { data: existingUser, error: selectError } = await supabaseAdmin
+    logToServer("INFO", "Profile GET - Fetching user", {
+      address: userAddress,
+    });
+    // Use const for destructuring, profileData will be shadowed if reassigned
+    const { data: initialProfileData, error: selectError } = await supabaseAdmin
       .from("users")
       .select(selectFields)
       .eq("address", userAddress)
-      .maybeSingle<ProfileData>(); // Specify the return type for maybeSingle
+      .maybeSingle<ProfileData>();
 
-    fetchError = selectError;
-    profileData = existingUser;
-
-    // Check fetchError is a valid PostgrestError and handle code
-    const isPostgrestError = (
-      error: unknown
-    ): error is {
-      code: string;
-      message: string;
-      details: string;
-      hint: string;
-    } => {
-      return typeof error === "object" && error !== null && "code" in error;
-    };
-
-    if (
-      fetchError &&
-      isPostgrestError(fetchError) &&
-      fetchError.code !== "PGRST116"
-    ) {
-      throw fetchError; // Rethrow other select errors
+    if (selectError && selectError.code !== "PGRST116") {
+      logToServer("ERROR", "Profile GET - Supabase select error", {
+        address: userAddress,
+        error: selectError,
+      });
+      throw selectError;
     }
 
-    // 2. Handle based on whether user exists
-    if (profileData) {
-      // User exists
-      if (profileData.handle === null) {
-        // User exists but handle is null - generate and update
-        const generatedHandle = userAddress.slice(-6);
-        logToServer("INFO", "Profile GET - Generating handle", {
-          address: userAddress,
-          handle: generatedHandle,
-        });
+    // Assign initial data to a mutable variable
+    let profileData = initialProfileData;
 
+    // Handle user creation or handle generation if needed
+    if (!profileData || !profileData.handle) {
+      const isNewUser = !profileData;
+      const generatedHandle = userAddress.slice(-6);
+      logToServer(
+        "INFO",
+        `Profile GET - ${isNewUser ? "Inserting user" : "Updating handle"}`,
+        { address: userAddress, generatedHandle }
+      );
+
+      if (isNewUser) {
+        const { data: newUser, error: insertError } = await supabaseAdmin
+          .from("users")
+          .insert({ address: userAddress, handle: generatedHandle })
+          .select(selectFields)
+          .single<ProfileData>();
+        if (insertError) {
+          logToServer("ERROR", "Profile GET - Failed inserting new user", {
+            address: userAddress,
+            error: insertError,
+          });
+          throw insertError;
+        }
+        profileData = newUser;
+      } else {
+        // Existing user, null handle
         const { data: updatedUser, error: updateError } = await supabaseAdmin
           .from("users")
           .update({
@@ -125,57 +162,22 @@ export async function GET(request: NextRequest) {
             updated_at: new Date().toISOString(),
           })
           .eq("address", userAddress)
-          .select(selectFields) // Select again to get all fields
-          .single();
-
+          .select(selectFields)
+          .single<ProfileData>();
         if (updateError) {
-          logToServer("ERROR", "Profile GET - Failed to update handle", {
+          logToServer("ERROR", "Profile GET - Failed updating handle", {
             address: userAddress,
             error: updateError,
           });
-          // Proceed with existing data, or throw?
-          // Let's proceed with old data for now, handle might be updated later.
-        } else {
-          profileData = updatedUser; // Use the updated profile data
-          logToServer("INFO", "Profile GET - Handle updated successfully", {
-            address: userAddress,
-            handle: generatedHandle,
-          });
+          throw updateError;
         }
+        profileData = updatedUser;
       }
-      // else: User exists and handle is already set - do nothing extra
-    } else {
-      // User does not exist - insert new user with generated handle
-      const generatedHandle = userAddress.slice(-6);
-      logToServer("INFO", "Profile GET - Inserting new user with handle", {
-        address: userAddress,
-        handle: generatedHandle,
-      });
-
-      const { data: newUser, error: insertError } = await supabaseAdmin
-        .from("users")
-        .insert({
-          address: userAddress,
-          handle: generatedHandle,
-          // Add other default fields if necessary, Supabase defaults should cover id, created_at, updated_at
-        })
-        .select(selectFields)
-        .single();
-
-      if (insertError) {
-        logToServer("ERROR", "Profile GET - Failed to insert new user", {
-          address: userAddress,
-          error: insertError,
-        });
-        throw insertError; // Throw if insert fails
-      }
-      profileData = newUser; // Use the newly inserted profile data
     }
 
-    // 3. Return the final profile data
     if (!profileData) {
-      // This case should ideally not be reached if insert/update worked
-      logToServer("ERROR", "Profile GET - Profile data is unexpectedly null", {
+      // This case should ideally not be reached after the above logic
+      logToServer("ERROR", "Profile GET - Profile data unexpectedly null", {
         address: userAddress,
       });
       return NextResponse.json(
@@ -184,26 +186,23 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    logToServer("INFO", "Profile GET Success", { address: userAddress });
-    // Map Supabase columns to frontend expectations
+    logToServer("INFO", "Profile GET - Success", { address: userAddress });
+    // Map Supabase columns to the specific keys expected by the /profile frontend page
     return NextResponse.json({
-      name: profileData.display_name,
+      name: profileData.display_name, // Frontend expects 'name'
       bio: profileData.bio,
-      pfp_url: profileData.avatar_url,
-      handle: profileData.handle,
-      email: profileData.email,
-      tier: profileData.tier,
-      location: profileData.location,
-      created_at: profileData.created_at,
+      pfp_url: profileData.avatar_url, // Frontend expects 'pfp_url'
     });
   } catch (err: unknown) {
+    // Catch all errors from the try block (select, insert, update)
     const message =
-      err instanceof Error ? err.message : "Failed to fetch profile";
-    console.error("GET /api/profile error:", err);
-    logToServer("ERROR", "Profile GET Failed", {
+      err instanceof Error ? err.message : "Failed to fetch profile data";
+    logToServer("ERROR", "Profile GET - Exception caught", {
       address: userAddress,
       error: message,
+      rawError: err,
     });
+    console.error("GET /api/profile error:", err);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -1,18 +1,21 @@
-import type { Metadata } from "next";
+/**
+ * src/app/layout.tsx
+ *
+ * Root layout for the application.
+ * Sets up global styles, fonts, providers (RainbowKit, Wagmi, SessionProvider).
+ */
+import "@/styles/globals.css";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { Providers } from "@/providers/Providers";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Auth Test App",
-  description: "Next.js app with Wagmi, SIWE, Supabase",
+  description: "Example app showcasing Web3 auth with SIWE and Supabase",
 };
 
 export default function RootLayout({
@@ -25,15 +28,13 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.variable
+          inter.className
         )}
       >
-        <Providers>
-          <div className="relative flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-          </div>
-        </Providers>
+        <Navbar />
+        <main className="flex-grow">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );
