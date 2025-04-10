@@ -5,15 +5,11 @@ import { z } from "zod";
 // Schema for the handle param
 const handleSchema = z.string().min(1);
 
-// Re-define the Context type alias
-type Context = {
-  params: {
-    handle: string;
-  };
-};
-
-export async function GET(req: NextRequest, context: Context) {
-  const handle = context?.params?.handle;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { handle: string } }
+): Promise<NextResponse> {
+  const handle = params.handle;
 
   const validation = handleSchema.safeParse(handle);
   if (!validation.success) {

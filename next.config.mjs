@@ -1,4 +1,5 @@
-import type { NextConfig } from "next";
+// Remove the import type statement
+// import type { NextConfig } from "next";
 
 // Read the hostname from environment variables
 const supabaseImageHostname = process.env.SUPABASE_IMAGE_HOSTNAME;
@@ -11,7 +12,8 @@ if (!supabaseImageHostname) {
   // Or throw new Error("SUPABASE_IMAGE_HOSTNAME environment variable is not set.");
 }
 
-const nextConfig: NextConfig = {
+// Remove the NextConfig type annotation
+const nextConfig = {
   images: {
     // Use remotePatterns with the environment variable
     remotePatterns: supabaseImageHostname
