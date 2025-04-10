@@ -1,4 +1,4 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SiweMessage } from "siwe";
@@ -137,16 +137,26 @@ const authOptions: NextAuthOptions = {
           });
           const result = await siwe.verify({
             signature: credentials.signature,
-            nonce: csrfToken, // Verify against the obtained CSRF token
+            nonce: csrfToken,
           });
 
           if (result.success) {
-            logToServer("INFO", "SIWE Authentication Success", {
-              address: siwe.address,
+            const userAddress = siwe.address;
+            logToServer("INFO", "SIWE Auth Success, Getting Handle", {
+              address: userAddress,
             });
+            const userHandle = await getUserHandle(userAddress);
+            logToServer("INFO", "SIWE Authorize - Returning User Object", {
+              address: userAddress,
+              handle: userHandle,
+            });
+
+            // Return object matching User type, with explicit assertion
             return {
-              id: siwe.address, // Use the Ethereum address as the user ID
-            };
+              id: userAddress,
+              address: userAddress,
+              handle: userHandle,
+            } as User; // Add type assertion
           }
           logToServer("WARN", "SIWE Verification Failed", {
             address: siwe.address,
@@ -206,9 +216,10 @@ const authOptions: NextAuthOptions = {
     // Session Callback: Called after JWT, add handle from token to session
     async session({ session, token }) {
       if (token?.sub) {
+        // Assign properties defined in our augmented Session['user'] type
         session.user = {
-          ...session.user,
-          id: token.sub,
+          ...session.user, // Keep existing default properties (name, email, image)
+          // id: token.sub, // Remove explicit ID assignment here
           address: token.sub,
           handle: token.handle as string | null, // Add handle from token
         };
